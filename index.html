@@ -148,7 +148,29 @@ details p{color:var(--muted);line-height:1.8;font-size:13px;max-width:660px;padd
 @media(max-width:800px){.wrap{width:min(100% - 40px,1380px)}.menu{display:block}.navlinks{display:none;position:absolute;top:86px;left:0;right:0;padding:25px 22px 30px;background:#0c1112f7;flex-direction:column;align-items:stretch;gap:24px;border-bottom:1px solid var(--line)}.navlinks.open{display:flex}.hero{height:780px;min-height:690px}.hero-bg{background-position:62% center}.hero:after{background:linear-gradient(90deg,#05080ad8 0%,#05080a85 53%,#05080a4a),linear-gradient(0deg,#080b0ded 0%,transparent 40%,#080b0c4e)}.hero-content{width:min(100%,630px)}.hero h1{font-size:clamp(83px,15vw,140px)}.hero-note{display:none}.section{padding:90px 0}.sectionhead{display:block;margin-bottom:39px}.sectionhead .p{margin-top:24px;max-width:550px}.about-grid,.compare-grid,.process-grid{grid-template-columns:1fr;gap:46px}.about-media{height:560px;order:2}.about-copy{order:1}.service-grid{grid-template-columns:1fr 1fr}.service:last-child{grid-column:span 2}.service{min-height:400px}.compare-box{height:470px}.gallery{grid-template-rows:260px 260px}.visual-statement{min-height:550px}}
 @media(max-width:580px){.wrap{width:min(100% - 34px,1380px)}.demo-ribbon{height:auto;min-height:29px;font-size:7px;letter-spacing:.09em}.sitehead{top:29px}.nav{height:73px}.brand{font-size:27px}.brand span{font-size:8px}.navlinks{top:73px}.hero{height:790px;min-height:0;max-height:none}.hero-bg{background-position:65% 44%;background-size:auto 100%}.hero:after{background:linear-gradient(0deg,#080b0df4 0%,#06090bc4 19%,#06090b44 65%,#06090b8e 100%),linear-gradient(90deg,#080b0dc9,transparent)}.hero-inner{align-items:flex-end;padding-top:100px;padding-bottom:133px}.hero-content{margin:0}.hero h1{font-size:clamp(72px,21.4vw,120px);margin:19px 0 22px;line-height:.84}.hero h1 .outline{font-size:.58em;-webkit-text-stroke:1px rgba(255,255,255,.89)}.hero .intro{font-size:12px;max-width:330px}.hero-cta{margin-top:26px}.btn{min-height:52px;font-size:10px;padding:14px 17px}.hero-bottom{bottom:26px}.hero-bottom span{font-size:8px}.tiny-scroll i{width:26px}.index{font-size:18px}h2{font-size:clamp(66px,17vw,95px)}.section{padding:79px 0}.eyebrow{font-size:9px}.sectionhead{margin-bottom:29px}.about-copy h2{margin-bottom:20px}.about-media{height:440px}.micro-row{margin-top:37px}.micro-row strong{font-size:42px}.service-grid{grid-template-columns:1fr;gap:12px}.service,.service:last-child{grid-column:auto;min-height:455px}.service h3{font-size:69px}.visual-statement{min-height:580px;background-position:58% 50%}.compare-box{height:440px}.compare-grid{gap:28px}.process-grid{gap:36px}.step{grid-template-columns:44px 1fr;gap:14px}.step h3{font-size:33px}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:280px 220px;gap:9px}.gallery figure:first-child{grid-column:span 2;grid-row:auto}.gallery figcaption{font-size:8px;left:11px;bottom:12px}.qa h2{margin-bottom:37px}.final-cta{min-height:600px;background-position:58% center}.final-cta h2{font-size:clamp(76px,20vw,120px)}.footer-top,.footer-bottom{display:block}.footer p{margin-top:24px}.footer-bottom>*{display:block;margin-top:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-bg,.oversize-track{animation:none}.reveal{opacity:1;transform:none;transition:none}*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* V3 immersive photo gallery / fast accessible interactions */
+.reveal{opacity:1;transform:none}.reveal.in{animation:gentleReveal .8s ease both}
+@keyframes gentleReveal{from{opacity:.77;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+#galerie .gallery figure{cursor:zoom-in}
+#galerie .gallery figure:after{content:'↗ EXPLORE';position:absolute;right:17px;top:18px;font-size:9px;font-weight:800;letter-spacing:.12em;background:#080b0dcc;border:1px solid #ffffff70;padding:12px 14px;opacity:0;transform:translateY(7px);transition:opacity .25s,transform .25s;color:#fff}
+#galerie .gallery figure:hover:after,#galerie .gallery figure:focus-visible:after{opacity:1;transform:none}
+#galerie .gallery figure:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.photo-modal{position:fixed;inset:0;margin:auto;padding:0;border:1px solid #d6b98875;background:#0a0e10;color:white;width:min(96vw,1250px);max-width:none;max-height:94svh;box-shadow:0 35px 100px #000a;overflow:hidden}
+.photo-modal::backdrop{background:#020506ed;backdrop-filter:blur(15px)}
+.photo-view{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:360px;max-height:90svh}
+.photo-view>img{width:100%;height:100%;max-height:calc(90svh - 90px);object-fit:contain;background:#090d0d}
+.photo-tools{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 23px;background:#111719}
+.photo-tools span{font-size:11px;font-weight:600;color:#bec3bb;line-height:1.5}
+.photo-nav{display:flex;align-items:center;gap:9px}
+.photo-nav button,.modal-close{width:42px;height:42px;border:1px solid #d6b98880;background:#111719;color:var(--gold);font-size:22px;display:flex;align-items:center;justify-content:center}
+.photo-nav button:hover,.modal-close:hover{background:var(--gold);color:#111}
+.modal-close{position:absolute;z-index:1;top:14px;right:14px;background:#080c0df0}
+@media(max-width:630px){#galerie .gallery figure:after{opacity:1;transform:none;top:8px;right:8px;font-size:8px;padding:8px}.photo-tools{padding:12px;gap:8px}.photo-tools span{font-size:10px}.photo-nav button{height:36px;width:36px}.photo-view{min-height:300px}}
+@media(prefers-reduced-motion:reduce){.reveal.in{animation:none}}
 </style>
+<link rel="preload" as="image" href="https://images.pexels.com/photos/5438609/pexels-photo-5438609.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2200">
+<meta property="og:title" content="NOVA DETAIL — Cinematic Automotive Design Concept"><meta property="og:description" content="Unabhängige Demo: luxuriöse Fahrzeugpflege-Website. Nicht offizieller Betrieb.">
 </head>
 <body>
 <div class="demo-ribbon">Concept Website • Fiktives Unternehmen • Keine Buchungen möglich</div>
@@ -207,6 +229,8 @@ details p{color:var(--muted);line-height:1.8;font-size:13px;max-width:660px;padd
 </div></section>
 <section class="final-cta" id="kontakt"><div class="wrap reveal"><span class="eyebrow">NOVA DETAIL · Konzeptwebsite</span><h2>DEIN<br>AUFTRITT.<br><span class="gold-text">AUF EINEM<br>NEUEN LEVEL.</span></h2><p class="p">Eine visuelle Demonstration, wie eine unverwechselbare Website für einen Premium-Automobilservice aussehen kann.</p><a class="btn gold" href="#start">Zurück zum Anfang <span class="arrow">↑</span></a></div></section>
 </main>
+
+<dialog class="photo-modal" id="photoModal" aria-label="Fotogalerie"><button class="modal-close" id="closePhoto" type="button" aria-label="Galerie schließen">×</button><div class="photo-view"><img id="photoLarge" alt=""><div class="photo-tools"><span id="photoCaption">Fahrzeugpflege · Illustrative Fotografie</span><div class="photo-nav"><button id="prevPhoto" type="button" aria-label="Vorheriges Bild">‹</button><button id="nextPhoto" type="button" aria-label="Nächstes Bild">›</button></div></div></div></dialog>
 <footer class="footer"><div class="wrap"><div class="footer-top"><a class="brand" href="#start">NOVA<span>D E T A I L</span></a><p>Diese Website ist eine fiktive Design-Demonstration. Keine echten Leistungen, keine Kundenergebnisse, keine Buchung, kein aktiver Geschäftsbetrieb. Fotografien: illustrative, frei nutzbare Aufnahmen von Pexels.</p></div><div class="footer-bottom"><span>© 2026 · NOVA DETAIL · DESIGN CONCEPT</span><a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">Bildquelle: Pexels ↗</a><span>DESIGNED TO FEEL DIFFERENT.</span></div></div></footer>
 <script>
 (function(){
@@ -219,6 +243,17 @@ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const items=document.querySelectorAll('.reveal');
 if(!reduced&&'IntersectionObserver' in window){const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.09,rootMargin:'0px 0px -35px 0px'});items.forEach(x=>io.observe(x))}else{items.forEach(x=>x.classList.add('in'))}
 if(!reduced&&window.matchMedia('(min-width: 900px)').matches){const bg=document.querySelector('.hero-bg');let queued=false;window.addEventListener('scroll',()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{const y=Math.min(window.scrollY,850);bg.style.translate='0 '+Math.round(y*.14)+'px';queued=false})},{passive:true})}
+})();
+</script>
+
+<script>
+(function(){const items=[...document.querySelectorAll('#galerie .gallery figure')],dlg=document.getElementById('photoModal'),large=document.getElementById('photoLarge'),caption=document.getElementById('photoCaption');let index=0;
+if(!dlg||!items.length||typeof dlg.showModal!=='function')return;
+function render(){const img=items[index].querySelector('img');let url;try{url=new URL(img.currentSrc||img.src);if(url.hostname==='images.pexels.com')url.searchParams.set('w','1800');}catch{url={href:img.src}}large.src=url.href;large.alt=img.alt||'Illustrative Fahrzeugfotografie';caption.textContent=(index+1)+' / '+items.length+'  ·  '+(items[index].querySelector('figcaption')?.textContent||'Design-Demonstration')+'  ·  Stockfotografie'}
+function open(i){index=i;render();dlg.showModal()}
+items.forEach((item,i)=>{item.setAttribute('tabindex','0');item.setAttribute('role','button');item.setAttribute('aria-label','Galeriebild '+(i+1)+' groß ansehen');item.addEventListener('click',()=>open(i));item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i)}})});
+document.getElementById('closePhoto').addEventListener('click',()=>dlg.close());document.getElementById('prevPhoto').addEventListener('click',()=>{index=(index+items.length-1)%items.length;render()});document.getElementById('nextPhoto').addEventListener('click',()=>{index=(index+1)%items.length;render()});
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});dlg.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){index=(index+items.length-1)%items.length;render()}if(e.key==='ArrowRight'){index=(index+1)%items.length;render()}});
 })();
 </script>
 </body></html>
