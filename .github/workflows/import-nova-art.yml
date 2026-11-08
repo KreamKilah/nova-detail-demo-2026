@@ -1,0 +1,40 @@
+name: Import original NOVA hero artwork
+on:
+  push:
+    paths:
+      - '.github/workflows/import-nova-art.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-original-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Download original private temporary artwork
+        env:
+          SOURCE_IMAGE_URL: ${{ secrets.NOVA_HERO_IMAGE_URL }}
+        run: |
+          mkdir -p assets
+          curl --fail --location --retry 2 --max-time 120 "$SOURCE_IMAGE_URL" --output assets/hero-source.png
+          test "$(wc -c < assets/hero-source.png)" -gt 10000
+          file assets/hero-source.png | grep -q 'PNG image'
+      - name: Optimize as local WebP asset
+        run: |
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          from PIL import Image
+          im = Image.open("assets/hero-source.png")
+          im.thumbnail((2300, 1280))
+          im.convert("RGB").save("assets/nova-hero.webp", "WEBP", quality=84, method=6)
+          PY
+          test "$(wc -c < assets/nova-hero.webp)" -gt 10000
+      - name: Commit permanent website asset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/nova-hero.webp
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Add locally hosted original NOVA cinematic hero"
+          git push
