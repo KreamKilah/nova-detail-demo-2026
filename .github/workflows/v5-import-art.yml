@@ -1,15 +1,6 @@
 name: NOVA V5 original artwork import
 on:
   workflow_dispatch:
-    inputs:
-      macro_url:
-        description: "Temporary generated artwork URL: macro paint scene"
-        required: true
-        type: string
-      interior_url:
-        description: "Temporary generated artwork URL: interior scene"
-        required: true
-        type: string
 permissions:
   contents: write
 jobs:
@@ -18,10 +9,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Download generated source images
+      - name: Download original image sources
         env:
-          MACRO_URL: \${{ inputs.macro_url }}
-          INTERIOR_URL: \${{ inputs.interior_url }}
+          MACRO_URL: \${{ secrets.NOVA_V5_MACRO_URL }}
+          INTERIOR_URL: \${{ secrets.NOVA_V5_INTERIOR_URL }}
         run: |
           mkdir -p assets
           curl --fail --location --retry 2 --max-time 130 "$MACRO_URL" -o /tmp/v5-macro.png
@@ -30,7 +21,7 @@ jobs:
           test "$(wc -c < /tmp/v5-interior.png)" -gt 10000
           file /tmp/v5-macro.png | grep -q 'PNG image'
           file /tmp/v5-interior.png | grep -q 'PNG image'
-      - name: Convert to optimized local WebP assets
+      - name: Convert to web-optimized assets
         run: |
           python -m pip install --quiet Pillow
           python - <<'PY'
@@ -40,12 +31,12 @@ jobs:
               im.thumbnail((1950,1200))
               im.convert("RGB").save(f"assets/v5-{key}.webp","WEBP",quality=83,method=6)
           PY
-      - name: Commit generated artwork
+      - name: Commit permanent image assets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/v5-macro.webp assets/v5-interior.webp
           if git diff --cached --quiet; then echo "No changes"; exit 0; fi
-          git commit -m "Add two original V5 cinematic detailing images"
+          git commit -m "Add original V5 cinematic images"
           git pull --rebase origin main
           git push origin HEAD:main
