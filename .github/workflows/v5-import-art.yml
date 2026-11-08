@@ -1,0 +1,51 @@
+name: NOVA V5 original artwork import
+on:
+  workflow_dispatch:
+    inputs:
+      macro_url:
+        description: "Temporary generated artwork URL: macro paint scene"
+        required: true
+        type: string
+      interior_url:
+        description: "Temporary generated artwork URL: interior scene"
+        required: true
+        type: string
+permissions:
+  contents: write
+jobs:
+  import-art:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Download generated source images
+        env:
+          MACRO_URL: \${{ inputs.macro_url }}
+          INTERIOR_URL: \${{ inputs.interior_url }}
+        run: |
+          mkdir -p assets
+          curl --fail --location --retry 2 --max-time 130 "$MACRO_URL" -o /tmp/v5-macro.png
+          curl --fail --location --retry 2 --max-time 130 "$INTERIOR_URL" -o /tmp/v5-interior.png
+          test "$(wc -c < /tmp/v5-macro.png)" -gt 10000
+          test "$(wc -c < /tmp/v5-interior.png)" -gt 10000
+          file /tmp/v5-macro.png | grep -q 'PNG image'
+          file /tmp/v5-interior.png | grep -q 'PNG image'
+      - name: Convert to optimized local WebP assets
+        run: |
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          from PIL import Image
+          for key in ["macro", "interior"]:
+              im=Image.open(f"/tmp/v5-{key}.png")
+              im.thumbnail((1950,1200))
+              im.convert("RGB").save(f"assets/v5-{key}.webp","WEBP",quality=83,method=6)
+          PY
+      - name: Commit generated artwork
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/v5-macro.webp assets/v5-interior.webp
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Add two original V5 cinematic detailing images"
+          git pull --rebase origin main
+          git push origin HEAD:main
