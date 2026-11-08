@@ -168,11 +168,50 @@ details p{color:var(--muted);line-height:1.8;font-size:13px;max-width:660px;padd
 .modal-close{position:absolute;z-index:1;top:14px;right:14px;background:#080c0df0}
 @media(max-width:630px){#galerie .gallery figure:after{opacity:1;transform:none;top:8px;right:8px;font-size:8px;padding:8px}.photo-tools{padding:12px;gap:8px}.photo-tools span{font-size:10px}.photo-nav button{height:36px;width:36px}.photo-view{min-height:300px}}
 @media(prefers-reduced-motion:reduce){.reveal.in{animation:none}}
+
+/* V4 — original-art cinematic hero / studio-light interaction */
+.sitehead{position:fixed;top:31px;transition:background .28s,top .28s,box-shadow .28s,border-color .28s}
+.sitehead.is-scrolled{top:0;background:rgba(8,11,13,.94);border-bottom-color:rgba(214,185,136,.32);box-shadow:0 13px 48px #0006;backdrop-filter:blur(16px)}
+.scroll-meter{position:fixed;top:0;left:0;width:var(--scroll,0%);height:2px;background:linear-gradient(90deg,var(--gold2),#ffe2a6);z-index:200;pointer-events:none}
+.hero{height:min(950px,100svh);min-height:710px}
+.hero-bg{background-image:url('assets/nova-hero.webp'),url('https://images.pexels.com/photos/5438609/pexels-photo-5438609.jpeg?auto=compress&cs=tinysrgb&w=2200');background-position:center 52%;background-size:cover;animation:hero-unveil 2s cubic-bezier(.2,.7,.2,1) both}
+@keyframes hero-unveil{0%{opacity:.25;filter:brightness(.4) blur(8px);transform:scale(1.13)}100%{opacity:1;filter:brightness(1) blur(0);transform:scale(1.04)}}
+.hero:after{background:linear-gradient(90deg,rgba(3,6,7,.95) 0%,rgba(3,6,7,.83) 24%,rgba(3,6,7,.38) 47%,rgba(3,6,7,.07) 76%),linear-gradient(0deg,#070a0df5 0%,transparent 37%,#070a0c48 100%)}
+.hero-glow{background:radial-gradient(ellipse at var(--glow-x,78%) var(--glow-y,59%),rgba(230,176,104,.17),transparent 32%);transition:opacity .65s ease}
+.hero-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.11;background:repeating-linear-gradient(90deg,transparent 0 2px,#fff1 3px 3.5px,transparent 4px 7px);mask-image:linear-gradient(90deg,transparent 10%,black)}
+.hero-content{width:min(840px,70%);position:relative}
+.hero h1{font-size:clamp(96px,10.3vw,175px);line-height:.86;letter-spacing:-.045em;position:relative}
+.hero h1 .outline{font-size:.64em;color:transparent;-webkit-text-stroke:1.3px rgba(255,255,255,.9)}
+.hero h1 .line:first-child{text-shadow:0 4px 32px rgba(0,0,0,.37)}
+.hero .intro{color:#f1f0e5c9;text-wrap:pretty}
+.hero .eyebrow{color:#ecd3ab}
+.hero .eyebrow:before{background:#ecd3ab}
+.hero-shine{position:absolute;z-index:-1;left:-20%;width:70%;top:0;bottom:0;pointer-events:none;background:linear-gradient(112deg,transparent 41%,rgba(240,206,148,.045) 49%,transparent 53%);transform:translateX(-100%);animation:light-pass 2.7s 1.2s ease-out both}
+@keyframes light-pass{to{transform:translateX(230%)}}
+.hero-tagline{display:flex;align-items:center;gap:15px;margin-bottom:25px;color:#e5d2b6ad;font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+.hero-tagline i{width:38px;height:1px;background:var(--gold);display:inline-block}
+.studio-light{position:absolute;z-index:8;right:max(4.1vw,28px);bottom:104px;min-height:50px;background:rgba(11,15,15,.78);border:1px solid rgba(230,198,148,.7);backdrop-filter:blur(10px);color:#fff2dd;display:flex;align-items:center;gap:15px;padding:12px 18px;letter-spacing:.12em;text-transform:uppercase;font-size:10px;font-weight:800;cursor:pointer;transition:background .22s,transform .22s}
+.studio-light:hover{background:#252019d9;transform:translateY(-2px)}
+.studio-light:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.studio-light .light-dot{width:9px;height:9px;border-radius:50%;background:#ecca91;box-shadow:0 0 13px #f3c77d}
+.studio-light[aria-pressed="false"] .light-dot{background:#777;box-shadow:none}
+.hero.lights-off .hero-bg{animation:none;filter:brightness(.40) saturate(.75);transition:filter .7s ease}
+.hero.lights-off .hero-glow{opacity:.09}
+.hero.lights-off .hero-grain{opacity:.04}
+.hero.lights-off .studio-light{background:rgba(10,12,12,.94)}
+.hero.lights-off .hero-shine{animation:none;opacity:0}
+.hero .hero-note{color:#f6dfb8b8}
+@media(max-width:1000px){.hero h1{font-size:clamp(91px,12vw,160px)}.hero-content{width:min(790px,77%)}}
+@media(max-width:800px){.hero-bg{background-position:67% 50%}.hero-content{width:min(100%,630px)}.studio-light{right:22px;bottom:93px;min-height:42px;padding:9px 13px;font-size:9px}.hero:after{background:linear-gradient(90deg,#050709de,#05070975 65%,#0507092b),linear-gradient(0deg,#080b0de8,transparent 49%,#080b0c55)}}
+@media(max-width:580px){.sitehead{top:29px}.sitehead.is-scrolled{top:0}.hero{height:min(850px,100svh);min-height:780px}.hero-bg{background-position:68% 45%;background-size:auto 100%}.hero:after{background:linear-gradient(0deg,#080b0df6 0%,rgba(5,7,8,.90) 19%,rgba(5,7,8,.27) 64%,rgba(5,7,8,.7) 100%)}.hero-inner{padding-bottom:155px}.hero-content{margin:0;width:100%}.hero h1{font-size:clamp(72px,20.8vw,114px);line-height:.83}.hero h1 .outline{font-size:.59em;-webkit-text-stroke:1px #ffffffdd}.hero-tagline{font-size:8px;margin-bottom:17px}.hero .intro{max-width:360px}.studio-light{top:116px;bottom:auto;right:17px;padding:9px 11px;min-height:39px;font-size:8px}.hero-glow{background:radial-gradient(circle at 60% 46%,#e9b96f24,transparent 45%)}}
+@media(prefers-reduced-motion:reduce){.hero-bg,.hero-shine{animation:none!important}.hero-bg{filter:none!important;transform:scale(1.04)}.hero.lights-off .hero-bg{filter:brightness(.55) saturate(.8)!important}.studio-light{transition:none}.hero-grain{display:none}}
 </style>
-<link rel="preload" as="image" href="https://images.pexels.com/photos/5438609/pexels-photo-5438609.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2200">
+<link rel="preload" as="image" href="assets/nova-hero.webp" fetchpriority="high">
+<meta property="og:image" content="https://kreamkilah.github.io/nova-detail-demo-2026/assets/nova-hero.webp">
 <meta property="og:title" content="NOVA DETAIL — Cinematic Automotive Design Concept"><meta property="og:description" content="Unabhängige Demo: luxuriöse Fahrzeugpflege-Website. Nicht offizieller Betrieb.">
 </head>
 <body>
+<div class="scroll-meter" id="scrollMeter" aria-hidden="true"></div>
 <div class="demo-ribbon">Concept Website • Fiktives Unternehmen • Keine Buchungen möglich</div>
 <header class="sitehead"><nav class="wrap nav" aria-label="Hauptnavigation">
 <a class="brand" href="#start" aria-label="Nova Detail Startseite">NOVA<span>D E T A I L</span></a>
@@ -181,13 +220,14 @@ details p{color:var(--muted);line-height:1.8;font-size:13px;max-width:660px;padd
 </nav></header>
 <main>
 <section class="hero" id="start" aria-labelledby="hero-title">
-<div class="hero-bg" aria-hidden="true"></div><div class="hero-glow" aria-hidden="true"></div>
+<div class="hero-bg" aria-hidden="true"></div><div class="hero-glow" aria-hidden="true"></div><div class="hero-grain" aria-hidden="true"></div><div class="hero-shine" aria-hidden="true"></div>
 <div class="wrap hero-inner"><div class="hero-content">
 <span class="eyebrow">Automotive perfection · Designkonzept 2026</span>
 <h1 id="hero-title"><span class="line">DIE KUNST</span><span class="line outline">DER PERFEKTION.</span></h1>
-<p class="intro">Es geht nicht nur um Sauberkeit. Es geht um das Gefühl, dein Fahrzeug zum ersten Mal wieder zu sehen. Willkommen in einer anderen Welt der Fahrzeugpflege.</p>
+<div class="hero-tagline"><i></i><span>CRAFTED LIGHT · CINEMATIC DETAIL · ORIGINAL CONCEPT</span></div><p class="intro">Es geht nicht nur um Sauberkeit. Es geht um das Gefühl, dein Fahrzeug zum ersten Mal wieder zu sehen. Willkommen in einer anderen Welt der Fahrzeugpflege.</p>
 <div class="hero-cta"><a class="btn gold" href="#leistungen">Leistungen entdecken <span class="arrow">↗</span></a><a class="btn ghost" href="#vergleich">Das Erlebnis ansehen <span class="arrow">↓</span></a></div>
 </div><div class="hero-note">CRAFTED TO IMPRESS · VOL. 01</div></div>
+<button type="button" class="studio-light" id="studioLight" aria-pressed="true" aria-label="Studio-Beleuchtung umschalten"><span class="light-dot" aria-hidden="true"></span><span id="studioLightLabel">Licht dimmen</span><span aria-hidden="true">✦</span></button>
 <div class="wrap hero-bottom"><span class="tiny-scroll">SCROLL TO EXPLORE <i></i></span><span class="index">01 / 06</span></div>
 </section>
 <div class="oversize" aria-hidden="true"><div class="oversize-track"><span>PRECISION <b>✦</b> PASSION <b>✦</b> PERFECTION <b>✦</b> EVERY DETAIL MATTERS <b>✦</b></span><span>PRECISION <b>✦</b> PASSION <b>✦</b> PERFECTION <b>✦</b> EVERY DETAIL MATTERS <b>✦</b></span></div></div>
@@ -231,7 +271,7 @@ details p{color:var(--muted);line-height:1.8;font-size:13px;max-width:660px;padd
 </main>
 
 <dialog class="photo-modal" id="photoModal" aria-label="Fotogalerie"><button class="modal-close" id="closePhoto" type="button" aria-label="Galerie schließen">×</button><div class="photo-view"><img id="photoLarge" alt=""><div class="photo-tools"><span id="photoCaption">Fahrzeugpflege · Illustrative Fotografie</span><div class="photo-nav"><button id="prevPhoto" type="button" aria-label="Vorheriges Bild">‹</button><button id="nextPhoto" type="button" aria-label="Nächstes Bild">›</button></div></div></div></dialog>
-<footer class="footer"><div class="wrap"><div class="footer-top"><a class="brand" href="#start">NOVA<span>D E T A I L</span></a><p>Diese Website ist eine fiktive Design-Demonstration. Keine echten Leistungen, keine Kundenergebnisse, keine Buchung, kein aktiver Geschäftsbetrieb. Fotografien: illustrative, frei nutzbare Aufnahmen von Pexels.</p></div><div class="footer-bottom"><span>© 2026 · NOVA DETAIL · DESIGN CONCEPT</span><a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">Bildquelle: Pexels ↗</a><span>DESIGNED TO FEEL DIFFERENT.</span></div></div></footer>
+<footer class="footer"><div class="wrap"><div class="footer-top"><a class="brand" href="#start">NOVA<span>D E T A I L</span></a><p>Diese Website ist eine fiktive Design-Demonstration. Keine echten Leistungen, keine Kundenergebnisse, keine Buchung, kein aktiver Geschäftsbetrieb. Hero-Motiv: eigenständig generierte Konzeptgrafik; weitere Fotografien: illustrative Stockaufnahmen von Pexels.</p></div><div class="footer-bottom"><span>© 2026 · NOVA DETAIL · DESIGN CONCEPT</span><a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">Bildquelle: Pexels ↗</a><span>DESIGNED TO FEEL DIFFERENT.</span></div></div></footer>
 <script>
 (function(){
 const menu=document.getElementById('menu'),links=document.getElementById('navlinks');
@@ -254,6 +294,18 @@ function open(i){index=i;render();dlg.showModal()}
 items.forEach((item,i)=>{item.setAttribute('tabindex','0');item.setAttribute('role','button');item.setAttribute('aria-label','Galeriebild '+(i+1)+' groß ansehen');item.addEventListener('click',()=>open(i));item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i)}})});
 document.getElementById('closePhoto').addEventListener('click',()=>dlg.close());document.getElementById('prevPhoto').addEventListener('click',()=>{index=(index+items.length-1)%items.length;render()});document.getElementById('nextPhoto').addEventListener('click',()=>{index=(index+1)%items.length;render()});
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});dlg.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){index=(index+items.length-1)%items.length;render()}if(e.key==='ArrowRight'){index=(index+1)%items.length;render()}});
+})();
+</script>
+
+<script>
+(function(){
+const head=document.querySelector('.sitehead'),hero=document.querySelector('.hero'),ctl=document.getElementById('studioLight'),txt=document.getElementById('studioLightLabel'),meter=document.getElementById('scrollMeter');
+let lit=true,busy=false;
+if(ctl&&hero){ctl.addEventListener('click',()=>{lit=!lit;hero.classList.toggle('lights-off',!lit);ctl.setAttribute('aria-pressed',String(lit));txt.textContent=lit?'Licht dimmen':'Licht aktivieren'})}
+function onScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const y=window.scrollY||0;head?.classList.toggle('is-scrolled',y>96);if(meter){const total=Math.max(1,document.documentElement.scrollHeight-innerHeight);meter.style.setProperty('--scroll',Math.min(100,Math.max(0,y/total*100))+'%')}busy=false})}
+window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});onScroll();
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(hero&&!reduce&&window.matchMedia('(hover: hover) and (pointer: fine)').matches){let mouseBusy=false,px=75,py=57;hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();px=((e.clientX-r.left)/r.width*100).toFixed(1);py=((e.clientY-r.top)/r.height*100).toFixed(1);if(mouseBusy)return;mouseBusy=true;requestAnimationFrame(()=>{hero.style.setProperty('--glow-x',px+'%');hero.style.setProperty('--glow-y',py+'%');mouseBusy=false})},{passive:true})}
 })();
 </script>
 </body></html>
